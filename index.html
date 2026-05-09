@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kris Trader Alarm — 업데이트</title>
+<style>
+  :root {
+    --bg: #f4f6fb; --bg2: #ffffff; --bg3: #eef0f8;
+    --accent: #2962ff; --border: #dde0ef;
+    --text: #1a1d2e; --text2: #4a4d60; --text3: #888ba0;
+    --green: #00897b; --red: #ef5350;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', 'Segoe UI', sans-serif; padding: 0; }
+
+  .header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 20px 0; }
+  .header-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 24px; font-weight: 900; color: var(--text); }
+  .logo .k { color: var(--accent); }
+  .logo .t { color: var(--green); }
+  .header-sub { font-size: 15px; color: var(--text3); margin-left: auto; }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+
+  .version-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 32px; }
+  .ver-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .ver-badge { background: var(--accent); color: #fff; font-size: 20px; font-weight: 800; padding: 6px 18px; border-radius: 20px; }
+  .ver-date { color: var(--text3); font-size: 16px; }
+  .dl-btn {
+    margin-left: auto;
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 12px 28px; font-size: 17px; font-weight: 700; cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: background .15s;
+  }
+  .dl-btn:hover { background: #1e4fd8; }
+
+  .how-to { background: var(--bg3); border-radius: 10px; padding: 16px 20px; margin-top: 16px; }
+  .how-to h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--text2); }
+  .how-to ol { padding-left: 18px; font-size: 15px; line-height: 2; color: var(--text2); }
+  .how-to code { background: var(--bg); padding: 1px 6px; border-radius: 4px; font-size: 14px; color: var(--green); }
+
+  .ver-num { color: var(--accent); }
+  .ver-dt { color: var(--text3); font-weight: 400; font-size: 15px; margin-left: auto; }
+  .history-section > summary {
+    cursor: pointer; padding: 14px 18px; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-weight: 800; font-size: 17px; list-style: none;
+    display: flex; align-items: center; gap: 10px;
+    transition: background .15s;
+  }
+  .history-section > summary:hover { background: var(--bg3); }
+  .history-section[open] > summary { border-radius: 10px 10px 0 0; border-bottom: none; }
+  .history-body { border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; background: var(--bg2); padding: 4px 0; }
+  .ver-entry { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .ver-entry:last-child { border-bottom: none; }
+  .ver-entry-hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .ver-entry ul { padding-left: 18px; font-size: 15px; line-height: 2.1; color: var(--text2); margin: 0; }
+
+  .footer { text-align: center; color: var(--text3); font-size: 14px; margin-top: 60px; padding-bottom: 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo"><span class="k">K</span>ris <span class="t">T</span>rader Alarm</div>
+    <div class="header-sub">업비트 + 빗썸 통합 가격 알람 확장 프로그램</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 최신 버전 -->
+  <div class="version-card" id="latest-block">
+    <div class="ver-row">
+      <span class="ver-badge" id="latest-ver">v2.0.7</span>
+      <span class="ver-date" id="latest-date">2026-05-09</span>
+      <a class="dl-btn" id="dl-link" href="downloads/kris_trader_alarm_v2.0.7.zip" download>⬇ 다운로드</a>
+    </div>
+    <div style="font-size:15px;color:var(--text2);margin-bottom:16px;" id="latest-changelog">+ 버튼 클릭 시 코인 입력란 자동 포커스</div>
+
+    <div class="how-to">
+      <h4>📦 업데이트 방법</h4>
+      <ol>
+        <li>위 다운로드 버튼으로 zip 파일 받기</li>
+        <li>기존 확장 프로그램 폴더에 압축 해제 (파일 덮어쓰기)</li>
+        <li>고래 브라우저 → <code>whale://extensions</code> 접속</li>
+        <li>Kris Trader Alarm 카드에서 <strong>새로고침(↺)</strong> 버튼 클릭</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 버전 히스토리 -->
+  <details class="history-section">
+    <summary>📋 버전별 업데이트 내역</summary>
+    <div class="history-body">
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.8</span><span class="ver-dt">2026-05-09</span></div>
+        <ul><li>팝업 내 새 버전 업데이트 알림 배너 추가 (자동 버전 체크)</li></ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.7</span><span class="ver-dt">2026-05-09</span></div>
+        <ul><li>+ 버튼 클릭 시 코인 입력란 자동 포커스 (클릭 없이 바로 타이핑 가능)</li></ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.6</span><span class="ver-dt">2026-05-09</span></div>
+        <ul><li>알람 추가 화면에 비고(메모) 입력란 추가</li></ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.5</span><span class="ver-dt">2026-05-09</span></div>
+        <ul>
+          <li>볼륨 슬라이더 조절 시 즉시 자동 저장 (저장 버튼 불필요)</li>
+          <li>미리듣기 시 변경된 볼륨 즉시 반영</li>
+        </ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.4</span><span class="ver-dt">2026-05-08</span></div>
+        <ul>
+          <li>현재 열려있는 코인 페이지 알람을 목록 최상단으로 자동 정렬</li>
+          <li>해당 알람에 📍 배지 및 강조 테두리 표시</li>
+        </ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.3</span><span class="ver-dt">2026-05-07</span></div>
+        <ul>
+          <li>토스트 메시지 클릭 시 해당 코인 거래 페이지로 이동</li>
+          <li>비고(메모)가 있으면 토스트 하단에 빨간색으로 표시</li>
+        </ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.2</span><span class="ver-dt">2026-05-06</span></div>
+        <ul>
+          <li>알람 소리 추가: 동전소리 · 뚝배기 · 마이너스</li>
+          <li>고래(Whale) 브라우저 오디오 재생 호환성 수정</li>
+          <li>빗썸 한글 이름 보완</li>
+          <li>알람 재활성화 기본값: 직접 입력 1분으로 변경</li>
+          <li>확장 프로그램 고정 ID 적용 (폴더 이동 시 알람 유지)</li>
+        </ul>
+      </div>
+
+      <div class="ver-entry">
+        <div class="ver-entry-hdr"><span class="ver-num">v2.0.0</span><span class="ver-dt">초기 출시</span></div>
+        <ul>
+          <li>업비트 + 빗썸 통합 가격 알람</li>
+          <li>이상/이하 조건 설정, 알람 발동 시 토스트 + 소리 + 브라우저 알림</li>
+          <li>알람 활성화/비활성화 토글, 수정, 삭제, 관리 모드</li>
+          <li>내보내기/가져오기, 라이트/다크 테마</li>
+        </ul>
+      </div>
+
+    </div>
+  </details>
+
+  <div class="footer">Kris Trader Alarm — by Kris</div>
+</div>
+
+<script>
+// version.json에서 최신 정보 동적 로드
+fetch('version.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('latest-ver').textContent = 'v' + d.version;
+    document.getElementById('latest-date').textContent = d.date || '';
+    document.getElementById('dl-link').href = d.download;
+    document.getElementById('dl-link').download = 'kris_trader_alarm_v' + d.version + '.zip';
+    if (d.changelog) document.getElementById('latest-changelog').textContent = d.changelog;
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>
