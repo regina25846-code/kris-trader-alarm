@@ -18,10 +18,8 @@
 
   .header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 20px 0; }
   .header-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 16px; }
-  .logo { font-size: 24px; font-weight: 900; color: var(--text); }
-  .logo .k { color: var(--accent); }
-  .logo .t { color: var(--green); }
-  .header-sub { font-size: 15px; color: var(--text3); margin-left: auto; }
+  .logo { font-size: 20px; font-weight: 900; color: var(--text); }
+  .header-sub { font-size: 14px; color: var(--text3); margin-top: 2px; }
 
   .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
 
@@ -67,8 +65,29 @@
 
 <div class="header">
   <div class="header-inner">
-    <div class="logo"><span class="k">K</span>ris <span class="t">T</span>rader Alarm</div>
-    <div class="header-sub">업비트 + 빗썸 통합 가격 알람 확장 프로그램</div>
+    <svg width="44" height="44" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <defs>
+        <linearGradient id="hdr-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f0f4ff"/>
+          <stop offset="100%" stop-color="#e8eeff"/>
+        </linearGradient>
+        <linearGradient id="hdr-bell" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3b82f6"/>
+          <stop offset="100%" stop-color="#6366f1"/>
+        </linearGradient>
+      </defs>
+      <rect width="120" height="120" rx="26" fill="url(#hdr-bg)"/>
+      <rect x="4" y="4" width="112" height="112" rx="22" fill="none" stroke="url(#hdr-bell)" stroke-width="2" opacity="0.35"/>
+      <path d="M 60 24 C 39 24 32 38 32 54 L 32 66 L 88 66 L 88 54 C 88 38 81 24 60 24 Z" fill="url(#hdr-bell)" opacity="0.92"/>
+      <path d="M 60 28 C 45 28 39 40 39 52 L 39 57 C 44 49 52 45 60 45 C 68 45 76 49 81 57 L 81 52 C 81 40 75 28 60 28 Z" fill="rgba(255,255,255,0.25)"/>
+      <rect x="26" y="66" width="68" height="8" rx="4" fill="url(#hdr-bell)" opacity="0.88"/>
+      <circle cx="60" cy="82" r="5.5" fill="url(#hdr-bell)" opacity="0.8"/>
+      <circle cx="60" cy="22" r="3" fill="#6366f1" opacity="0.5"/>
+    </svg>
+    <div>
+      <div class="logo">Kris Trader Alarm</div>
+      <div class="header-sub">업비트 + 빗썸 통합 가격 알람 확장 프로그램</div>
+    </div>
   </div>
 </div>
 
