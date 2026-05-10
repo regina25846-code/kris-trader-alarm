@@ -1,7 +1,7 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "date": "2026-05-10",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.1.zip",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.2.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "IBM Plex Sans KR 폰트 적용 + 로고 클릭 시 설명서 열기"
+  "changelog": "Pretendard 폰트 적용 + 폰트·칸 크기 확대 + 빗썸 모달 명령어 제거"
 }
