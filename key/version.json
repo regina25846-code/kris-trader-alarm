@@ -1,7 +1,7 @@
 {
-  "version": "1.1.2",
+  "version": "1.1.3",
   "date": "2026-05-10",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.2.zip",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.3.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "Pretendard 폰트 적용 + 폰트·칸 크기 확대 + 빗썸 모달 명령어 제거"
+  "changelog": "레이아웃 반응형 적용 — 차트·호가창이 브라우저 창 크기에 맞게 자동 확장"
 }
