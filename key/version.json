@@ -1,7 +1,7 @@
 {
-  "version": "1.1.4",
+  "version": "1.1.5",
   "date": "2026-05-10",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.4.zip",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.5.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "빗썸 레이아웃 토글 추가 — t키로 와이드 레이아웃 전환 (차트+호가창+주문폼+체결내역 한 화면)"
+  "changelog": "빗썸 레이아웃 토글 단축키 팝업에서 직접 설정 가능"
 }
