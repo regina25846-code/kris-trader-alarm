@@ -1,7 +1,7 @@
 {
-  "version": "1.1.4",
+  "version": "1.1.5",
   "date": "2026-05-14",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.4.zip",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.5.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "차트 가로 반응형 추가, 세로 반응형 설정 옵션 추가"
+  "changelog": "레이아웃 반응형 개선 — 매수매도창·호가창 잘림 수정, 시세/정보 탭 정렬 수정"
 }
