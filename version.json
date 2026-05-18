@@ -1,7 +1,7 @@
 {
-  "version": "2.1.0",
-  "date": "2026-05-17",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v2.1.0.zip",
+  "version": "3.0.0",
+  "date": "2026-05-19",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.0.0.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/",
-  "changelog": "스마트 검색 알고리즘 개선 (영타 한글 변환 정확도 향상, + 버튼 안정성 개선)"
+  "changelog": "업비트 차트 알람선, 자동 조건 선택, 절전 복원 자동화"
 }
