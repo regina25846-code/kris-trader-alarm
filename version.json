@@ -1,7 +1,7 @@
 {
-  "version": "3.0.0",
-  "date": "2026-05-19",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.0.0.zip",
+  "version": "3.1.0",
+  "date": "2026-05-21",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.1.0.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/",
-  "changelog": "업비트 차트 알람선, 자동 조건 선택, 절전 복원 자동화"
+  "changelog": "알람 히스토리 추가, UI 폰트·버튼 개선"
 }
