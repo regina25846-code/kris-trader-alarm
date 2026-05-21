@@ -1,7 +1,7 @@
 {
-  "version": "3.1.0",
-  "date": "2026-05-21",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.1.0.zip",
+  "version": "3.2.0",
+  "date": "2026-05-22",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.2.0.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/",
-  "changelog": "알람 히스토리 추가, UI 폰트·버튼 개선"
+  "changelog": "모바일 푸시 알림(ntfy) 추가, 알람 히스토리 클릭 시 거래소 페이지 이동"
 }
