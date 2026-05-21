@@ -158,7 +158,8 @@
       <li><a href="#s6">설정 — 재활성화 방식</a></li>
       <li><a href="#s7">알림 동작 방식</a></li>
       <li><a href="#s8">업비트 차트 알람선</a></li>
-      <li><a href="#s9">버전별 업데이트 내역</a></li>
+      <li><a href="#s9">모바일 푸시 알림 (ntfy)</a></li>
+      <li><a href="#s10">버전별 업데이트 내역</a></li>
     </ol>
   </div>
 
@@ -540,10 +541,90 @@
     </div>
   </div>
 
-  <!-- Version History -->
-  <div class="section" id="s9" style="margin-top:40px;">
+  <!-- ntfy Mobile Push -->
+  <div class="section" id="s9">
     <div class="section-hdr">
       <div class="section-num">9</div>
+      <h2>모바일 푸시 알림 (ntfy)</h2>
+    </div>
+
+    <div class="tip" style="background:#eff6ff;border-color:#3b82f6;color:#1e40af;">📱 PC에서 알람이 울릴 때 스마트폰으로도 알림을 받을 수 있는 기능입니다. Android · iOS 모두 지원합니다.</div>
+
+    <div class="card">
+      <h3>📲 1단계 — ntfy 앱 설치</h3>
+      <p style="font-size:14px;line-height:1.7;">ntfy는 무료 오픈소스 푸시 알림 서비스입니다.</p>
+      <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li><strong>Android</strong>: Google Play Store에서 <strong>"ntfy"</strong> 검색 후 설치</li>
+        <li><strong>iOS</strong>: App Store에서 <strong>"ntfy"</strong> 검색 후 설치</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🔑 2단계 — 토픽명 정하기</h3>
+      <p style="font-size:14px;line-height:1.7;">토픽명은 <strong>나만의 개인 채널 이름</strong>입니다. 이 이름을 아는 사람만 알림을 받을 수 있으므로 <strong>추측하기 어렵게</strong> 설정하세요.</p>
+      <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li>영문·숫자·하이픈 조합 권장 (예: <code>kris-alarm-x7k2m9</code>)</li>
+        <li>타인과 공유되지 않는 고유한 이름으로 설정</li>
+        <li>공백·특수문자 사용 불가</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📱 3단계 — ntfy 앱에서 구독 추가</h3>
+      <ol style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li>ntfy 앱 실행 후 우측 하단 <strong>+ 버튼</strong> 탭</li>
+        <li>서버: <code>https://ntfy.sh</code> (기본값 유지)</li>
+        <li>토픽명에 정해둔 이름 입력 (예: <code>kris-alarm-x7k2m9</code>)</li>
+        <li><strong>Subscribe</strong> 버튼 탭</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>⚙️ 4단계 — 확장앱 설정</h3>
+      <ol style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li>Kris Trader Alarm 팝업에서 <strong>⚙ 설정</strong> 버튼 클릭</li>
+        <li><strong>📱 모바일 푸시 알림 (ntfy)</strong> 섹션 찾기</li>
+        <li><strong>폰으로 푸시 알림 받기</strong> 체크박스 활성화</li>
+        <li>토픽명 입력란에 3단계에서 정한 토픽명 입력</li>
+        <li>중복 푸시 방지 간격 선택 (기본 30분)</li>
+        <li><strong>저장</strong> 버튼 클릭</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📨 5단계 — 테스트 푸시 전송</h3>
+      <ol style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li>설정 저장 후 <strong>📱 테스트 푸시 전송</strong> 버튼 클릭</li>
+        <li>스마트폰 ntfy 앱에 테스트 알림이 도착하면 설정 완료</li>
+      </ol>
+      <div class="tip">💡 테스트 알림이 오지 않으면 토픽명이 일치하는지 확인하세요.</div>
+    </div>
+
+    <div class="card">
+      <h3>🔔 알림 내용</h3>
+      <p style="font-size:14px;line-height:1.7;">알람 발동 시 다음 내용이 포함된 푸시 알림이 전송됩니다:</p>
+      <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li>코인명 및 목표 가격 / 이상·이하 조건</li>
+        <li>알람 발동 시점의 현재가</li>
+        <li>비고(메모) — 입력된 경우에만 표시</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>⏱ 중복 푸시 방지 (쿨다운)</h3>
+      <p style="font-size:14px;line-height:1.7;">같은 알람이 짧은 시간 내에 반복 발동될 때 푸시가 여러 번 오는 것을 방지합니다.</p>
+      <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--text2);">
+        <li><strong>제한 없음</strong>: 알람 발동마다 항상 전송</li>
+        <li><strong>5분 / 30분 / 1시간</strong>: 해당 시간 내 같은 알람 중복 전송 차단</li>
+        <li>서로 다른 알람은 쿨다운과 무관하게 각각 전송됨</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Version History -->
+  <div class="section" id="s10" style="margin-top:40px;">
+    <div class="section-hdr">
+      <div class="section-num">10</div>
       <h2>버전별 업데이트 내역</h2>
     </div>
 
