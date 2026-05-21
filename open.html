@@ -23,11 +23,11 @@
 
     let appUrl, webUrl;
     if (ex === 'bithumb') {
-      appUrl = 'bithumb://trade/order/' + sym + '-KRW';
       webUrl = 'https://www.bithumb.com/react/trade/order/' + sym + '-KRW';
+      appUrl = 'intent://#Intent;package=com.btckorea.bithumb;scheme=bithumb;S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
     } else {
-      appUrl = 'upbit://exchange?code=CRIX.UPBIT.' + code;
       webUrl = 'https://upbit.com/exchange?code=CRIX.UPBIT.' + code;
+      appUrl = 'intent://#Intent;package=com.dunamu.exchange;scheme=upbit;S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
     }
 
     document.getElementById('weblink').href = webUrl;
