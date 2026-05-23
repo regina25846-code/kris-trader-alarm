@@ -1,7 +1,7 @@
 {
-  "version": "1.1.7",
-  "date": "2026-05-19",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.7.zip",
+  "version": "1.1.8",
+  "date": "2026-05-23",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.8.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "업비트 상단 바 현재 시간 표시 추가"
+  "changelog": "업비트 로그인 연장 팝업 자동 클릭"
 }
