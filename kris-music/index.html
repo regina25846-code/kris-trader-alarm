@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>K-music — 다운로드</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<style>
+  :root {
+    --bg: #12100A; --bg2: #1C1A0F; --bg3: #26231A;
+    --accent: #FBBF24; --border: #3D3825;
+    --text: #FFFFFF; --text2: #D4C89A; --text3: #8A7A54;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Pretendard','Noto Sans KR','Segoe UI',sans-serif; }
+
+  .header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 20px 0; }
+  .header-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 22px; font-weight: 900; color: var(--accent); letter-spacing: -0.5px; }
+  .logo span { color: var(--text); font-weight: 400; }
+  .header-sub { font-size: 14px; color: var(--text3); margin-top: 3px; }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+
+  .version-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+  .ver-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .ver-badge { background: var(--accent); color: #111; font-size: 18px; font-weight: 800; padding: 5px 16px; border-radius: 20px; }
+  .ver-date { color: var(--text3); font-size: 14px; }
+
+  .dl-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .dl-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #111; text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 22px; border-radius: 8px; transition: opacity 0.2s; }
+  .dl-btn.portable { background: #37474f; color: #fff; }
+  .dl-btn:hover { opacity: 0.85; }
+
+  .changelog { border-top: 1px solid var(--border); padding-top: 18px; }
+  .changelog-title { font-size: 12px; font-weight: 700; color: var(--text3); margin-bottom: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .changelog ul { padding-left: 18px; }
+  .changelog li { font-size: 14px; color: var(--text2); line-height: 1.75; }
+
+  .history-section { margin-top: 12px; }
+  .history-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; color: var(--text3); cursor: pointer; width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: border-color 0.2s; }
+  .history-toggle:hover { border-color: var(--accent); color: var(--text); }
+  details.history-wrap summary { list-style: none; }
+  details.history-wrap summary::-webkit-details-marker { display: none; }
+  details.history-wrap summary .txt-close { display: none; }
+  details.history-wrap[open] summary .txt-open { display: none; }
+  details.history-wrap[open] summary .txt-close { display: inline; }
+
+  .ver-block { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-top: 12px; }
+  .ver-block-hdr { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+  .ver-block ul { padding-left: 18px; }
+  .ver-block li { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  .note { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 24px; }
+  .note strong { color: var(--text); }
+
+  footer { text-align: center; font-size: 12px; color: var(--text3); padding: 40px 0 24px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">K<span>-music</span></div>
+      <div class="header-sub">유튜브 뮤직 스트리밍 플레이어</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="note">
+    <strong>설치 안내</strong><br>
+    설치형(Setup)은 Windows에 설치 후 자동업데이트 지원.<br>
+    포터블은 설치 없이 바로 실행 가능 (자동업데이트 미지원).
+  </div>
+
+  <div class="version-card">
+    <div class="ver-row">
+      <span class="ver-badge">v1.1.0</span>
+      <span class="ver-date">2026-06-26</span>
+    </div>
+    <div class="dl-btns">
+      <a class="dl-btn" href="https://github.com/regina25846-code/K-music/releases/download/v1.1.0/K-Music.Setup.1.1.0.exe">
+        ⬇ 설치형 다운로드
+      </a>
+      <a class="dl-btn portable" href="https://github.com/regina25846-code/K-music/releases/download/v1.1.0/K-Music-1.1.0-portable.exe">
+        ⬇ 포터블 다운로드
+      </a>
+    </div>
+    <div class="changelog">
+      <div class="changelog-title">v1.1.0 변경 내역</div>
+      <ul>
+        <li>UI 전면 리디자인 — 앰버 골드 다크 테마 기본 적용</li>
+        <li>스킨 선택 기능 — 앰버 골드 / 라이트 화이트 (설정에서 선택)</li>
+        <li>새 로고 — Cormorant Garamond 세로 스택 K-music</li>
+        <li>헤더 호버 시에만 버튼 표시 (평소엔 로고만)</li>
+        <li>SVG 아이콘 전면 교체</li>
+        <li>설정 화면 한국어 적용</li>
+        <li>KoPubWorld Dotum Medium 폰트 내장</li>
+        <li>프로그레스 바 / 볼륨 슬라이더 색상 개선</li>
+      </ul>
+    </div>
+
+    <div class="history-section">
+      <details class="history-wrap">
+        <summary>
+          <button class="history-toggle" style="pointer-events:none;">
+            <span>버전별 업데이트 내역 <span class="txt-open">펼쳐보기 ▼</span><span class="txt-close">접기 ▲</span></span>
+          </button>
+        </summary>
+
+        <div class="ver-block">
+          <div class="ver-block-hdr">v1.0.0 — 2026-06-19</div>
+          <ul>
+            <li>유튜브 URL 직접 추가 재생</li>
+            <li>유튜브 검색 기능</li>
+            <li>플레이리스트 여러 개 관리</li>
+            <li>yt-dlp 스트리밍 (다운로드 없이 재생)</li>
+            <li>음질 설정 (128k / 192k / 320k)</li>
+            <li>셔플 / 반복(전체 / 한곡) 모드</li>
+            <li>볼륨 조절</li>
+            <li>시스템 트레이 백그라운드 재생</li>
+            <li>항상 위 고정, 시작 프로그램 등록</li>
+            <li>마지막 곡 이어 재생</li>
+            <li>자동업데이트 지원</li>
+          </ul>
+        </div>
+
+      </details>
+    </div>
+  </div>
+
+</div>
+
+<footer>K-music Player © 2026</footer>
+</body>
+</html>
