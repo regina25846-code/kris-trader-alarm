@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K-YT Finder</title>
+<style>
+:root {
+  --bg: #0f0f0f;
+  --bg2: #1a1a1a;
+  --bg3: #272727;
+  --border: #3a3a3a;
+  --text: #f1f1f1;
+  --text2: #aaa;
+  --text3: #666;
+  --gold: #FFD700;
+  --fire: #FF6B35;
+  --green: #2ECC71;
+  --blue: #3498DB;
+  --red: #e74c3c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Pretendard', -apple-system, 'Malgun Gothic', sans-serif; min-height: 100vh; }
+
+/* ── Header ── */
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { font-size: 20px; font-weight: 800; color: var(--text); white-space: nowrap; }
+.logo span { color: #ff0000; }
+.search-wrap { flex: 1; max-width: 600px; display: flex; gap: 8px; }
+.search-input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: #555; }
+.search-btn {
+  background: #ff0000;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.search-btn:hover { opacity: 0.85; }
+.search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Sort bar ── */
+.sort-bar {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.sort-label { font-size: 12px; color: var(--text3); margin-right: 4px; }
+.sort-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.sort-btn.active { background: #ff0000; border-color: #ff0000; color: #fff; }
+.result-count { margin-left: auto; font-size: 12px; color: var(--text3); }
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--bg2);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+.card:hover { transform: translateY(-2px); }
+.card.score-3 { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
+.card.score-2 { border-color: var(--fire); box-shadow: 0 0 16px rgba(255,107,53,0.15); }
+
+.thumb-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #000; }
+.thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.duration-badge {
+  position: absolute;
+  bottom: 6px; right: 6px;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.score-badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+.score-badge.s3 { background: rgba(255,215,0,0.9); color: #111; }
+.score-badge.s2 { background: rgba(255,107,53,0.9); color: #fff; }
+
+.card-body { padding: 12px; }
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.card-channel { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
+.card-date { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* ── Metrics ── */
+.metrics { display: flex; flex-direction: column; gap: 5px; }
+.metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.metric-label { font-size: 11px; color: var(--text3); width: 90px; flex-shrink: 0; }
+.metric-bar-wrap { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.metric-bar { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.metric-val { font-size: 11px; font-weight: 700; width: 56px; text-align: right; flex-shrink: 0; }
+
+.c-green { color: var(--green); }
+.c-gold  { color: var(--gold); }
+.c-fire  { color: var(--fire); }
+.c-blue  { color: var(--blue); }
+.c-gray  { color: var(--text3); }
+
+.divider { width: 100%; height: 1px; background: var(--border); margin: 8px 0; }
+.views-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.total-views { font-size: 12px; color: var(--text2); }
+.total-views strong { color: var(--text); }
+
+/* ── Loading / Empty ── */
+.center { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 12px; color: var(--text3); }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: #ff0000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-icon { font-size: 48px; }
+.status-msg { font-size: 14px; color: var(--text3); }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 20px 0;
+  margin-bottom: 0;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ── Player Modal ── */
+.player-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.player-overlay.open { display: flex; }
+.player-box {
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  width: min(900px, 96vw);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  position: relative;
+}
+.player-box iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: none;
+  display: block;
+}
+.player-info {
+  padding: 12px 16px;
+  background: #111;
+}
+.player-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.player-channel { font-size: 12px; color: var(--text2); }
+.player-close {
+  position: absolute;
+  top: -14px; right: -14px;
+  width: 30px; height: 30px;
+  background: #444;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.player-close:hover { background: #ff0000; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">K<span>-YT</span></div>
+  <div class="search-wrap">
+    <input class="search-input" id="q" placeholder="검색어 입력..." autocomplete="off">
+    <button class="search-btn" id="searchBtn" onclick="doSearch()">검색</button>
+  </div>
+</div>
+
+<div class="sort-bar" id="sortBar" style="display:none">
+  <span class="sort-label">정렬:</span>
+  <button class="sort-btn active" onclick="setSort('score')">⭐ 종합점수</button>
+  <button class="sort-btn" onclick="setSort('vph')">⚡ 시간당 조회</button>
+  <button class="sort-btn" onclick="setSort('sub')">👥 구독자 대비</button>
+  <button class="sort-btn" onclick="setSort('avg')">📈 채널평균 대비</button>
+  <button class="sort-btn" onclick="setSort('views')">👁 총 조회수</button>
+  <span class="result-count" id="resultCount"></span>
+</div>
+
+<!-- Player Modal -->
+<div class="player-overlay" id="playerOverlay" onclick="closePlayer(event)">
+  <div class="player-box" id="playerBox">
+    <button class="player-close" onclick="closePlayer()">✕</button>
+    <iframe id="playerFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <div class="player-info">
+      <div class="player-title" id="playerTitle"></div>
+      <div class="player-channel" id="playerChannel"></div>
+    </div>
+  </div>
+</div>
+
+<div id="main">
+  <div class="center">
+    <div class="empty-icon">🔍</div>
+    <div class="status-msg">검색어를 입력하세요</div>
+  </div>
+</div>
+
+<script>
+const API_KEY = 'AIzaSyDQkRPPuyqnsNvQfxRZux8KdF9RrQpRMV4';
+const BASE = 'https://www.googleapis.com/youtube/v3';
+
+let allResults = [];
+let currentSort = 'score';
+const chCache = {};
+
+document.getElementById('q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+function setSort(s) {
+  currentSort = s;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderResults(allResults);
+}
+
+async function apiFetch(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`API error ${r.status}`);
+  return r.json();
+}
+
+function fmtNum(n) {
+  if (n >= 1e8) return (n/1e8).toFixed(1) + '억';
+  if (n >= 1e4) return (n/1e4).toFixed(1) + '만';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+  return n.toLocaleString();
+}
+
+function fmtVph(v) {
+  if (v >= 1e6) return (v/1e6).toFixed(1) + 'M/hr';
+  if (v >= 1e3) return (v/1e3).toFixed(1) + 'K/hr';
+  return Math.round(v) + '/hr';
+}
+
+function fmtAge(published) {
+  const h = (Date.now() - new Date(published)) / 3600000;
+  if (h < 1) return Math.round(h * 60) + '분 전';
+  if (h < 24) return Math.round(h) + '시간 전';
+  if (h < 24 * 7) return Math.round(h / 24) + '일 전';
+  if (h < 24 * 30) return Math.round(h / 24 / 7) + '주 전';
+  if (h < 24 * 365) return Math.round(h / 24 / 30) + '개월 전';
+  return Math.round(h / 24 / 365) + '년 전';
+}
+
+function parseDuration(iso) {
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return '';
+  const h = parseInt(m[1]||0), min = parseInt(m[2]||0), s = parseInt(m[3]||0);
+  if (h > 0) return `${h}:${String(min).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${min}:${String(s).padStart(2,'0')}`;
+}
+
+function metricColor(ratio) {
+  if (ratio >= 3) return 'c-green';
+  if (ratio >= 1.5) return 'c-gold';
+  if (ratio >= 0.7) return 'c-blue';
+  return 'c-gray';
+}
+
+function barColor(ratio) {
+  if (ratio >= 3) return '#2ECC71';
+  if (ratio >= 1.5) return '#FFD700';
+  if (ratio >= 0.7) return '#3498DB';
+  return '#555';
+}
+
+function barPct(ratio) {
+  return Math.min(100, ratio * 33) + '%';
+}
+
+async function doSearch() {
+  const q = document.getElementById('q').value.trim();
+  if (!q) return;
+
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.textContent = '검색 중...';
+  document.getElementById('sortBar').style.display = 'none';
+  showLoading();
+
+  try {
+    // 1. Search
+    const searchData = await apiFetch(
+      `${BASE}/search?part=snippet&q=${encodeURIComponent(q)}&type=video&maxResults=20&relevanceLanguage=ko&key=${API_KEY}`
+    );
+    if (!searchData.items?.length) { showEmpty('검색 결과가 없습니다.'); return; }
+
+    const items = searchData.items;
+    const videoIds = items.map(i => i.id.videoId);
+    const channelIds = [...new Set(items.map(i => i.snippet.channelId))];
+
+    // 2. Video stats
+    const videoData = await apiFetch(
+      `${BASE}/videos?part=statistics,contentDetails,snippet,status&id=${videoIds.join(',')}&key=${API_KEY}`
+    );
+    const videoMap = {};
+    for (const v of videoData.items) videoMap[v.id] = v;
+
+    // 3. Channel stats (batch, with cache)
+    const uncachedIds = channelIds.filter(id => !chCache[id]);
+    if (uncachedIds.length) {
+      const chData = await apiFetch(
+        `${BASE}/channels?part=statistics,contentDetails&id=${uncachedIds.join(',')}&key=${API_KEY}`
+      );
+      for (const ch of chData.items) {
+        chCache[ch.id] = {
+          subscribers: parseInt(ch.statistics.subscriberCount || 0),
+          uploadsPlaylistId: ch.contentDetails?.relatedPlaylists?.uploads || '',
+          avgViews: null,
+        };
+      }
+    }
+
+    // 4. Channel average (parallel, with cache)
+    showLoadingMsg('채널 평균 조회 중...');
+    await Promise.all(channelIds.map(async (chId) => {
+      const ch = chCache[chId];
+      if (!ch || ch.avgViews !== null || !ch.uploadsPlaylistId) return;
+      try {
+        const plData = await apiFetch(
+          `${BASE}/playlistItems?part=contentDetails&playlistId=${ch.uploadsPlaylistId}&maxResults=15&key=${API_KEY}`
+        );
+        const recentIds = plData.items?.map(i => i.contentDetails.videoId) || [];
+        if (!recentIds.length) { ch.avgViews = 0; return; }
+        const rvData = await apiFetch(
+          `${BASE}/videos?part=statistics&id=${recentIds.join(',')}&key=${API_KEY}`
+        );
+        const counts = rvData.items.map(v => parseInt(v.statistics.viewCount || 0));
+        ch.avgViews = counts.reduce((a, b) => a + b, 0) / counts.length;
+      } catch { ch.avgViews = 0; }
+    }));
+
+    // 5. Assemble results
+    const results = [];
+    for (const item of items) {
+      const vid = videoMap[item.id.videoId];
+      if (!vid) continue;
+      const publishedAt = vid.snippet.publishedAt;
+      const hoursAgo = Math.max(0.5, (Date.now() - new Date(publishedAt)) / 3600000);
+      const views = parseInt(vid.statistics.viewCount || 0);
+      const chId = vid.snippet.channelId;
+      const ch = chCache[chId] || { subscribers: 0, avgViews: 0 };
+
+      const vph = views / hoursAgo;
+      const subRatio = ch.subscribers > 0 ? views / ch.subscribers : 0;
+      const avgRatio = ch.avgViews > 0 ? views / ch.avgViews : 0;
+
+      results.push({
+        videoId: vid.id,
+        title: vid.snippet.title,
+        channel: vid.snippet.channelTitle,
+        channelId: chId,
+        thumbnail: vid.snippet.thumbnails.medium?.url || vid.snippet.thumbnails.default?.url,
+        publishedAt,
+        hoursAgo,
+        views,
+        vph,
+        subRatio,
+        avgRatio,
+        subscribers: ch.subscribers,
+        avgViews: ch.avgViews || 0,
+        duration: parseDuration(vid.contentDetails?.duration || ''),
+        embeddable: vid.status?.embeddable !== false,
+      });
+    }
+
+    // Compute vph percentile for scoring
+    const vphVals = results.map(r => r.vph).sort((a, b) => a - b);
+    const vphP70 = vphVals[Math.floor(vphVals.length * 0.7)] || 0;
+
+    for (const r of results) {
+      let score = 0;
+      if (r.vph >= vphP70) score++;
+      if (r.subRatio >= 0.2) score++;
+      if (r.avgRatio >= 2.0) score++;
+      r.score = score;
+    }
+
+    allResults = results;
+    document.getElementById('sortBar').style.display = 'flex';
+    document.getElementById('resultCount').textContent = `${results.length}개 결과`;
+    renderResults(results);
+
+  } catch (e) {
+    showEmpty('오류가 발생했습니다: ' + e.message);
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '검색';
+  }
+}
+
+function sortedResults(results) {
+  const copy = [...results];
+  switch (currentSort) {
+    case 'score': return copy.sort((a, b) => b.score - a.score || b.avgRatio - a.avgRatio);
+    case 'vph':   return copy.sort((a, b) => b.vph - a.vph);
+    case 'sub':   return copy.sort((a, b) => b.subRatio - a.subRatio);
+    case 'avg':   return copy.sort((a, b) => b.avgRatio - a.avgRatio);
+    case 'views': return copy.sort((a, b) => b.views - a.views);
+    default: return copy;
+  }
+}
+
+function renderResults(results) {
+  const sorted = sortedResults(results);
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  for (const r of sorted) {
+    const card = document.createElement('div');
+    card.className = 'card' + (r.score >= 3 ? ' score-3' : r.score >= 2 ? ' score-2' : '');
+    card.onclick = () => r.embeddable
+      ? openPlayer(r.videoId, r.title, r.channel)
+      : window.open(`https://youtu.be/${r.videoId}`, '_blank');
+
+    const subRatioPct = (r.subRatio * 100).toFixed(1) + '%';
+    const avgRatioFmt = r.avgRatio.toFixed(1) + 'x';
+    const vphFmt = fmtVph(r.vph);
+
+    const scoreBadge = r.score >= 3
+      ? `<div class="score-badge s3">💎 강추</div>`
+      : r.score >= 2
+      ? `<div class="score-badge s2">🔥 알고리즘 탑승</div>`
+      : '';
+
+    const subColor = r.subRatio >= 0.5 ? 'c-green' : r.subRatio >= 0.2 ? 'c-gold' : r.subRatio >= 0.05 ? 'c-blue' : 'c-gray';
+    const avgColor = r.avgRatio >= 3 ? 'c-green' : r.avgRatio >= 2 ? 'c-gold' : r.avgRatio >= 1 ? 'c-blue' : 'c-gray';
+    const vphColor = 'c-blue';
+
+    const subBar = Math.min(100, r.subRatio * 200) + '%';
+    const avgBar = Math.min(100, r.avgRatio * 25) + '%';
+
+    const vphMax = Math.max(...results.map(x => x.vph));
+    const vphBar = vphMax > 0 ? Math.min(100, (r.vph / vphMax) * 100) + '%' : '0%';
+
+    const subBarClr = r.subRatio >= 0.5 ? '#2ECC71' : r.subRatio >= 0.2 ? '#FFD700' : r.subRatio >= 0.05 ? '#3498DB' : '#555';
+    const avgBarClr = r.avgRatio >= 3 ? '#2ECC71' : r.avgRatio >= 2 ? '#FFD700' : r.avgRatio >= 1 ? '#3498DB' : '#555';
+
+    const noSubData = r.subscribers === 0 ? ' <span style="color:#555;font-size:10px">(비공개)</span>' : '';
+
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <img src="${r.thumbnail}" alt="" loading="lazy">
+        ${r.duration ? `<div class="duration-badge">${r.duration}</div>` : ''}
+        ${!r.embeddable ? `<div class="duration-badge" style="bottom:auto;top:6px;right:6px;background:rgba(80,80,80,0.85)">↗ YT</div>` : ''}
+        ${scoreBadge}
+      </div>
+      <div class="card-body">
+        <div class="card-title">${escHtml(r.title)}</div>
+        <div class="card-channel">${escHtml(r.channel)} · ${fmtAge(r.publishedAt)}</div>
+        <div class="metrics">
+          <div class="metric-row">
+            <span class="metric-label">⚡ 시간당</span>
+            <div class="metric-bar-wrap"><div class="metric-bar" style="width:${vphBar};background:#3498DB"></div></div>
+            <span class="metric-val ${vphColor}">${vphFmt}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">👥 구독자 대비</span>
+            <div class="metric-bar-wrap"><div class="metric-bar" style="width:${subBar};background:${subBarClr}"></div></div>
+            <span class="metric-val ${subColor}">${subRatioPct}${noSubData}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">📈 채널평균 대비</span>
+            <div class="metric-bar-wrap"><div class="metric-bar" style="width:${avgBar};background:${avgBarClr}"></div></div>
+            <span class="metric-val ${avgColor}">${avgRatioFmt}</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="views-row">
+          <span class="total-views">조회수 <strong>${fmtNum(r.views)}</strong></span>
+          ${r.subscribers > 0 ? `<span style="font-size:11px;color:var(--text3)">구독자 ${fmtNum(r.subscribers)}</span>` : ''}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  main.appendChild(grid);
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showLoading() {
+  document.getElementById('main').innerHTML = `
+    <div class="center">
+      <div class="spinner"></div>
+      <div class="status-msg" id="loadMsg">영상 정보 가져오는 중...</div>
+    </div>`;
+}
+
+function showLoadingMsg(msg) {
+  const el = document.getElementById('loadMsg');
+  if (el) el.textContent = msg;
+}
+
+function openPlayer(videoId, title, channel) {
+  document.getElementById('playerFrame').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  document.getElementById('playerTitle').textContent = title;
+  document.getElementById('playerChannel').textContent = channel;
+  document.getElementById('playerOverlay').classList.add('open');
+}
+
+function closePlayer(e) {
+  if (e && document.getElementById('playerBox').contains(e.target)) return;
+  document.getElementById('playerOverlay').classList.remove('open');
+  document.getElementById('playerFrame').src = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePlayer(); });
+
+function showEmpty(msg) {
+  document.getElementById('main').innerHTML = `
+    <div class="center">
+      <div class="empty-icon">😶</div>
+      <div class="status-msg">${msg}</div>
+    </div>`;
+}
+</script>
+</body>
+</html>
