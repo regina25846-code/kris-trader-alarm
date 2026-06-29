@@ -412,7 +412,7 @@ td.r { text-align: right; }
   <div class="side-panel" id="sidePanel">
     <div class="side-player-wrap">
       <button class="side-close" onclick="closeSide()">✕</button>
-      <iframe id="sideFrame" allowfullscreen allow="autoplay; encrypted-media" src=""></iframe>
+      <div id="ytPlayerContainer" style="width:100%;aspect-ratio:16/9;background:#000;"></div>
     </div>
     <a class="side-yt-link" id="sideYtLink" href="#" target="_blank">↗ YouTube에서 열기</a>
     <div class="side-info" id="sideInfo"></div>
@@ -425,6 +425,70 @@ let INTERESTS = localStorage.getItem('ktube_interests') || '';
 let currentResults = [];
 let currentTab = 'home';
 let activeRow = null;
+
+// ── YouTube IFrame API ──
+let ytPlayer = null;
+let ytSaveInterval = null;
+let ytCurrentVideoId = null;
+
+(function() {
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+function onYouTubeIframeAPIReady() { /* API ready */ }
+
+function startYTPlayer(videoId, embeddable) {
+  if (!embeddable) {
+    window.open(`https://youtu.be/${videoId}`, '_blank');
+    return;
+  }
+  const saved = parseInt(localStorage.getItem('ktube_pos_' + videoId) || '0');
+  const container = document.getElementById('ytPlayerContainer');
+  container.innerHTML = '<div id="yt-inner"></div>';
+
+  clearInterval(ytSaveInterval);
+  if (ytPlayer) { try { ytPlayer.destroy(); } catch(e){} ytPlayer = null; }
+  ytCurrentVideoId = videoId;
+
+  ytPlayer = new YT.Player('yt-inner', {
+    width: '100%',
+    height: '100%',
+    videoId: videoId,
+    playerVars: { autoplay: 1, start: Math.floor(saved), rel: 0 },
+    events: {
+      onReady() {
+        ytSaveInterval = setInterval(() => {
+          if (!ytPlayer || !ytCurrentVideoId) return;
+          try {
+            const t = ytPlayer.getCurrentTime();
+            if (t > 3) localStorage.setItem('ktube_pos_' + ytCurrentVideoId, Math.floor(t));
+          } catch(e) {}
+        }, 5000);
+      },
+      onStateChange(e) {
+        if (e.data === YT.PlayerState.ENDED) {
+          localStorage.removeItem('ktube_pos_' + ytCurrentVideoId);
+          clearInterval(ytSaveInterval);
+        }
+      }
+    }
+  });
+}
+
+function stopYTPlayer() {
+  clearInterval(ytSaveInterval);
+  if (ytPlayer) {
+    try {
+      const t = ytPlayer.getCurrentTime();
+      if (ytCurrentVideoId && t > 3) localStorage.setItem('ktube_pos_' + ytCurrentVideoId, Math.floor(t));
+      ytPlayer.stopVideo();
+    } catch(e) {}
+  }
+  ytCurrentVideoId = null;
+  document.getElementById('ytPlayerContainer').innerHTML = '';
+}
 
 // ── Init ──
 if (!API_KEY) {
@@ -721,16 +785,16 @@ function selectRow(tr, videoId) {
   const r = currentResults.find(x => x.videoId === videoId);
   if (!r) return;
 
-  const frame = document.getElementById('sideFrame');
   const link = document.getElementById('sideYtLink');
-
-  if (r.embeddable) {
-    frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  } else {
-    frame.src = '';
-    window.open(`https://youtu.be/${videoId}`, '_blank');
-  }
   link.href = `https://youtu.be/${videoId}`;
+
+  // 이어 보기 표시
+  const saved = parseInt(localStorage.getItem('ktube_pos_' + videoId) || '0');
+  link.textContent = saved > 10
+    ? `↗ YouTube에서 열기  (이어보기: ${fmtTime(saved)})`
+    : '↗ YouTube에서 열기';
+
+  startYTPlayer(videoId, r.embeddable);
 
   const subColor = r.subRatio >= 0.3 ? 'c-green' : r.subRatio >= 0.1 ? 'c-gold' : 'c-gray';
   const avgColor = r.avgRatio >= 2.5 ? 'c-green' : r.avgRatio >= 1 ? 'c-gold' : 'c-gray';
@@ -758,9 +822,14 @@ function selectRow(tr, videoId) {
 }
 
 function closeSide() {
+  stopYTPlayer();
   document.getElementById('sidePanel').classList.remove('open');
-  document.getElementById('sideFrame').src = '';
   if (activeRow) { activeRow.classList.remove('active'); activeRow = null; }
+}
+
+function fmtTime(s) {
+  const m = Math.floor(s / 60), sec = s % 60;
+  return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
 // ── UI helpers ──
