@@ -1,7 +1,7 @@
 {
-  "version": "1.1.8",
-  "date": "2026-05-23",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.8.zip",
+  "version": "1.1.9",
+  "date": "2026-07-16",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/key/kris_trader_key_v1.1.9.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/key/",
-  "changelog": "업비트 로그인 연장 팝업 자동 클릭"
+  "changelog": "빗썸 매수매도 오류 개선, 업비트·빗썸 매수/매도/취소 속도 개선"
 }
