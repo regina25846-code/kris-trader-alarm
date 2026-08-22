@@ -1,7 +1,7 @@
 {
-  "version": "3.2.0-1",
-  "date": "2026-08-22",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.2.0-1.zip",
+  "version": "3.2.0",
+  "date": "2026-08-07",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.2.0.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/",
-  "changelog": "추세선(익스텐디드 라인) 알람 기능 추가"
+  "changelog": "K-Alert 리브랜딩+리디자인(K시리즈 로고, 이모지 전면 아이콘화, 알람선 UI 업비트 남색 통일)"
 }
