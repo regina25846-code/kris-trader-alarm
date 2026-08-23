@@ -1,7 +1,7 @@
 {
-  "version": "3.2.0",
-  "date": "2026-08-07",
-  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.2.0.zip",
+  "version": "3.2.1",
+  "date": "2026-08-24",
+  "download": "https://regina25846-code.github.io/kris-trader-alarm/kris_trader_alarm_v3.2.1.zip",
   "page": "https://regina25846-code.github.io/kris-trader-alarm/",
-  "changelog": "K-Alert 리브랜딩+리디자인(K시리즈 로고, 이모지 전면 아이콘화, 알람선 UI 업비트 남색 통일)"
+  "changelog": "가격 알람 차트 클릭으로 바로 생성"
 }
